@@ -29,6 +29,31 @@ class RobotInterface:
                         'opposite_scale_v': 10, 'opposite_scale_w': 10}
         self.robot_limit = {'vmax': 0.2, 'wmax': 6.0}
     
+    def get_vel(self, gdu, v_max=255, w_max=2.5, pilot_ids=[]):
+        """
+        gdu: 2-by-N vec
+        return: 2-by-N motor PWM signal
+        """
+        N = self.N
+        vel = self.prev_cmd_vel.copy()
+        
+        duv_zeros = np.abs(gdu[0, :]) < 0.001
+        duw_zeros = np.abs(gdu[1, :]) < 0.01
+        gdu[0, duv_zeros] = 0
+        gdu[1, duw_zeros] = 0
+
+        kv = 1/30*12/42*0.012
+        kw = 1/30*12/42*0.012/0.046*2
+        vel[0, :] = (gdu[0, :]/kv - gdu[1, :]/kw)/2
+        vel[1, :] = (gdu[0, :]/kv + gdu[1, :]/kw)/2
+        #  print("vel before clip:", vel)
+        vel[0, :] = np.clip(vel[0, :], -v_max, v_max)
+        vel[1, :] = np.clip(vel[1, :], -v_max, v_max)
+
+        self.cmd_vel = vel.astype(int)
+        self.prev_cmd_vel[:, :] = self.cmd_vel[:, :]
+        return self.cmd_vel
+
     def fit_pid(self, gdu, th=1e-3, v_min=0, v_max=250, same_sign=True, 
                 pilot_ids=[]):
         """
@@ -218,7 +243,8 @@ class HardwareWrap:
             r.update_vels()
             r.dts = tcp_com.dts
 
-            vel = r.fit_pid(self.u, same_sign=True, pilot_ids=self.pilot_ids)
+            #  vel = r.fit_pid(self.u, same_sign=True, pilot_ids=self.pilot_ids)
+            vel = r.get_vel(self.u)
             #  vel = np.array([[60, 160]]).T
             #  print("vel:", vel)
             if vel is None:

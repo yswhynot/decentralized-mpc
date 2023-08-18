@@ -1,7 +1,7 @@
 import numpy as np
 import warnings
-from puzzlebot_assembly.utils import *
-from puzzlebot_assembly.planner import Planner
+from puzzlebot_dec.utils import *
+from puzzlebot_dec.planner import Planner
 #from puzzlebot_assembly.control import Helper
 
 

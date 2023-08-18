@@ -4,7 +4,7 @@ import math
 from time import time
 import multiprocessing as mp
 
-from puzzlebot_assembly.utils import *
+from puzzlebot_dec.utils import *
 
 class ControlParam:
     def __init__(self, vmax=0.5,
@@ -115,9 +115,9 @@ def per_robot(N, param, sl, x_curr_big, fk_opt, get_local_pt, ipopt_param, n, pr
         opt.subject_to(x[:, ti+1] == fk_opt(x[:, ti], u[:, ti]))
         
     # try butterfly shape constraints
-    for ti in range(param.hcst):
-        opt.subject_to(-1/param.vmax * ca.fabs(x[3, ti+1]) + 
-                    1/param.wmax * x[4, ti+1] <= 0)
+    #  for ti in range(param.hcst):
+        #  opt.subject_to(-1/param.vmax * ca.fabs(x[3, ti+1]) + 
+                    #  1/param.wmax * x[4, ti+1] <= 0)
                     
     # align_poly_contr
     for cp_ids in prev_cp:

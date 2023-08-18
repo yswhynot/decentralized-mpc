@@ -2,10 +2,10 @@ import math
 import time
 import numpy as np
 import pybullet as p
-from puzzlebot_assembly.utils import *
-from puzzlebot_assembly.robots import Robots
-from puzzlebot_assembly.control import Controller, ControlParam
-from puzzlebot_assembly.behavior_lib import BehaviorLib
+from puzzlebot_dec.utils import *
+from puzzlebot_dec.robots import Robots
+from puzzlebot_dec.control import Controller, ControlParam
+from puzzlebot_dec.behavior_lib import BehaviorLib
 
 
 class SimUtils:

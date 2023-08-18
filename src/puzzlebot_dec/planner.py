@@ -5,7 +5,7 @@ from scipy.optimize import linear_sum_assignment
 from scipy.spatial import distance_matrix, distance
 from sklearn.metrics import pairwise_distances
 from scipy.sparse.csgraph import minimum_spanning_tree
-from puzzlebot_assembly.utils import *
+from puzzlebot_dec.utils import *
 
 class Planner:
     def __init__(self, N, L=5e-2):

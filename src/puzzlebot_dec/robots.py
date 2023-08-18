@@ -1,8 +1,7 @@
 import numpy as np
-from puzzlebot_assembly.canvas import Canvas
-from puzzlebot_assembly.logging import Logger
-from puzzlebot_assembly.behavior_lib import BehaviorLib
-
+from puzzlebot_dec.canvas import Canvas
+from puzzlebot_dec.logging import Logger
+from puzzlebot_dec.behavior_lib import BehaviorLib
 
 class RobotParam:
     def __init__(self, L=5e-2,

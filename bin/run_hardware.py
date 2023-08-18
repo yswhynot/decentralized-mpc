@@ -2,10 +2,10 @@
 
 import sys
 import rospy
-from puzzlebot_assembly.hardware_wrap import HardwareWrap 
-from puzzlebot_assembly.robots import Robots, RobotParam
-from puzzlebot_assembly.control import Controller, ControlParam
-from puzzlebot_assembly.behavior_lib import BehaviorLib
+from puzzlebot_dec.hardware_wrap import HardwareWrap 
+from puzzlebot_dec.robots import Robots, RobotParam
+from puzzlebot_dec.control import Controller, ControlParam
+from puzzlebot_dec.behavior_lib import BehaviorLib
 
 if __name__ == "__main__":
     try:

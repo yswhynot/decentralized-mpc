@@ -1,11 +1,10 @@
 import cProfile
 import numpy as np
-from puzzlebot_assembly.robots import Robots, RobotParam
-from puzzlebot_assembly.control import Controller, ControlParam
-from puzzlebot_assembly.behavior_lib import BehaviorLib
-from puzzlebot_assembly.simulation import BulletSim
+from puzzlebot_dec.robots import Robots, RobotParam
+from puzzlebot_dec.control import Controller, ControlParam
+from puzzlebot_dec.behavior_lib import BehaviorLib
+from puzzlebot_dec.simulation import BulletSim
 from multiprocessing.pool import Pool
-
 
 
 #def main():
@@ -27,13 +26,15 @@ if __name__ == "__main__":
                     mpc_horizon=3, constr_horizon=3, eth=eth)
     #pool = Pool()
     c = Controller(N, dt, c_param)
-    rsys = Robots(N, c, robot_param=r_param, eth=eth, pilot_ids=[])
+    pool = Pool()
+    rsys = Robots(N, c, pool, robot_param=r_param, eth=eth, pilot_ids=[])
     sim = BulletSim(N, c_param, c, rsys, is_anchor_separate=False)
     sim.setup(start=start)
     sim.load_urdf(robot_file="urdf/puzzlebot.urdf",
                 anchor_file="urdf/puz_anchor.urdf",
                 env_file="urdf/plane.urdf")
     sim.start()
+    pool.close()
     sim.end()
 
 """def pro():
